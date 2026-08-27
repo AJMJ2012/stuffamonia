@@ -1,0 +1,55 @@
+flickerlight FDHellboundTotenheimRadiation
+{
+    color 0.0 0.2 0.0
+    size 800
+    secondarySize 900
+    chance 0.5
+}
+
+flickerlight FDHellboundTotenheimExplosion1
+{
+    color 1.0 0.6 0.0
+    size 384
+    secondarySize 512
+    chance 0.3
+}
+
+flickerlight FDHellboundTotenheimExplosion2
+{
+    color 0.9 0.6 0.0
+    size 512
+    secondarySize 576
+    chance 0.3
+}
+
+flickerlight FDHellboundTotenheimExplosion3
+{
+    color 0.7 0.3 0.0
+    size 640
+    secondarySize 704
+    chance 0.3
+}
+
+flickerlight FDHellboundTotenheimExplosion4
+{
+    color 0.5 0.1 0.0
+    size 704
+    secondarySize 768
+    chance 0.3
+}
+
+flickerlight FDHellboundTotenheimExplosion5
+{
+    color 0.3 0.0 0.0
+    size 768
+    secondarySize 832
+    chance 0.3
+}
+
+flickerlight FDHellboundTotenheimExplosion6
+{
+    color 0.2 0.0 0.0
+    size 832
+    secondarySize 896
+    chance 0.3
+}

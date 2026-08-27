@@ -24,9 +24,8 @@ Actor InsRocketLauncherSpawnerEx : PandRandomSpawner replaces InsRocketLauncherS
 	DropItem "Pand_PulseCannon"				15  15
 	DropItem "Pand_DualMissileLauncher"		20  15
 	DropItem "Pand_DirectHit"				25  15
-	DropItem "Pand_HERocketLauncher"		40  10
 
-	DropItem "InsRareAsFuckWeaponSpawn"		80	2
+	DropItem "InsRareAsFuckWeaponSpawn" 80	2
 }
 
 Actor InsBFG9000Spawner : PandRandomSpawner replaces BFG9000
@@ -35,8 +34,14 @@ Actor InsBFG9000Spawner : PandRandomSpawner replaces BFG9000
 	DropItem "Pand_BFG10000"			0  	30
 	DropItem "Pand_BFG2700"				15  20
 	DropItem "Pand_SoulReaver"			20  15
+	DropItem "Pand_Totenheim"			25  15
 	DropItem "Pand_Perforator"			25  20
 	DropItem "Pand_GaussAnnihilator"	40  20
 
 	DropItem "InsRareAsFuckWeaponSpawn2" 80	2
+}
+
+Actor Pand_HERocketLauncherRemover : RandomSpawner Replaces Pand_HERocketLauncher
+{
+	DropItem "InsRocketLauncherSpawner"
 }

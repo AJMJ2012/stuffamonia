@@ -12,3 +12,27 @@ weapons/reaverloop2 dssoloo2
 weapons/reaverpow dssolpow
 weapons/reaversoulout dssolout
 weapons/reaversoulfly dssolfly
+
+hellboundbfg9000/charge HBFGCHAR //SplashDamage + ID Software/ET: Quake Wars
+hellboundbfg9000/loop HBFGLOOP //Epic Games/Unreal Tournament 1
+hellboundbfg9000/explosionmain HBFGBOOM //??
+hellboundbfg9000/idle HBFGIDLE //Raven + ID Software: Wolfenstein 3 (2009)
+hellboundbfg9000/warning HBFGWARN //Starcraft
+hellboundbfg9000/load HBFGLOAD
+hellboundbfg9000/firemain HBFGFIRE //it's a massive-ass mess of sounds there, lol.
+hellboundbfg9000/fire1 HBFGFIR1
+hellboundbfg9000/fire2 HBFGFIR2
+hellboundbfg9000/fire3 HBFGFIR3
+hellboundbfg9000/fire4 HBFGFIR4
+$random hellboundbfg9000/fire { hellboundbfg9000/fire1 hellboundbfg9000/fire2 hellboundbfg9000/fire3 hellboundbfg9000/fire4 }
+hellboundbfg9000/explosion1 HBFGBOM1
+hellboundbfg9000/explosion2 HBFGBOM2
+hellboundbfg9000/explosion3 HBFGBOM3
+hellboundbfg9000/explosion4 HBFGBOM4
+$random hellboundbfg9000/explosion { hellboundbfg9000/explosion1 hellboundbfg9000/explosion2 hellboundbfg9000/explosion3 hellboundbfg9000/explosion4 }
+hellboundbfg9000/explosionfar HBFGFAR
+effects/geigerburst1 GEIGERB1
+effects/geigerburst2 GEIGERB2
+effects/geigerburst3 GEIGERB3
+effects/geigerburst4 GEIGERB4
+$random effects/geigerburst { effects/geigerburst1 effects/geigerburst2 effects/geigerburst3 effects/geigerburst4 }
