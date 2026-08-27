@@ -7,6 +7,6 @@ version "4.10.0"
 #include "zscript/weapons/pulsecannon.zs"
 #include "zscript/weapons/sapphirewand.zs"
 #include "zscript/weapons/soulreaver.zs"
-//#include "zscript/weapons/totenheim.zs" // Currently overpowered
+#include "zscript/weapons/totenheim.zs" // Currently overpowered
 #include "zscript/weapons/totenheimlite.zs"
 #include "zscript/weapons/drunkmissile.zs"

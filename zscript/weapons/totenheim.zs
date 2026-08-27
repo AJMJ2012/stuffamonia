@@ -1,18 +1,18 @@
 // Based on Final Doomer's Hellbound Totenheim
 
-Class Pand_Totenheim : PandInsWeapon Replaces BigRocketDrop
+Class Pand_TotenheimNuke : PandInsWeapon Replaces BigRocketDrop
 {
 	Default
 	{
 		+PANDINSWEAPON.NOSUPERIORAUGMENT; // For Now
 		+WEAPON.AMMO_OPTIONAL;
 		+WEAPON.NOALERT;
-		Inventory.PickupMessage "You got the \cfTotenheim\c-!";
+		Inventory.PickupMessage "You got the \cfNuclear Totenheim\c-!";
 		Inventory.PickupSound "HERocket/Pickup";
 		Obituary "%k felt a small explosion wasn't good enough for %o.";
 		PandInsWeapon.MaxAugments 3;
 		PandInsWeapon.MenuPic "HBFGZ0";
-		Tag "Totenheim";
+		Tag "Nuclear Totenheim";
 		Weapon.AmmoGive 20;
 		Weapon.AmmoType "NewRocketAmmo";
 		Weapon.AmmoUse 20;
@@ -20,13 +20,6 @@ Class Pand_Totenheim : PandInsWeapon Replaces BigRocketDrop
 		Weapon.SlotNumber 7;
 		Weapon.SlotPriority -1;
 		Weapon.UpSound "HERocket/Up";
-	}
-
-	override string Pand_WeaponInfo()
-	{
-		return "The \cfTotenheim\c-. A portable nuclear missile weapon designed for one purpose: Extreme devastation.
-
-		No \c[j8]Superior\c- augment support right now.";
 	}
 
 	override string Pand_WeaponInfo()
