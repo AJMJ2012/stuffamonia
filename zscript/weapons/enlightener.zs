@@ -1,3 +1,4 @@
+// The Enlightener is missing the durability converter
 
 Class EnlightenerDurabilityConverter : PandInsDurabilityWeaponBuffer 
 {
@@ -11,5 +12,5 @@ Class EnlightenerDurabilityConverter : PandInsDurabilityWeaponBuffer
         Spawn:
             6S05 Z 1 A_ItemParticle();
             Loop;
-  	}
+    }
 }

@@ -1,0 +1,30 @@
+// There needs to be a better way to add to these spawners
+
+Actor InsShotgunSpawnerEx : PandRandomSpawner replaces InsShotgunSpawner
+{
+	DropItem "Pand_Shotgun"				0   100
+	DropItem "Pand_SlugShotgun"			0  	50
+	DropItem "Pand_AutoShotgun"			0  	20
+	DropItem "Pand_RiotShotgun"			15  15
+	DropItem "Pand_MysticSword"			15  15
+
+	DropItem "InsRareAsFuckWeaponSpawn" 80	2
+}
+
+Actor InsRocketLauncherSpawnerEx : PandRandomSpawner replaces InsRocketLauncherSpawner
+{
+	DropItem "Pand_RocketLauncher"			0   100
+	DropItem "Pand_GrenadeLauncher"			0  	50
+	DropItem "Pand_Pulverizer"				0  	15
+	DropItem "Pand_Flamethrower"			0  	15
+	DropItem "Pand_Incinerator"				0  	15
+	DropItem "Pand_DarkBlaster"				10  15
+	DropItem "Pand_NapalmBomber"			10  15
+	DropItem "Pand_StickyBombLauncher"		15  15
+	DropItem "Pand_PulseCannon"				15  15
+	DropItem "Pand_DualMissileLauncher"		20  15
+	DropItem "Pand_DirectHit"				25  15
+	DropItem "Pand_HERocketLauncher"		40  10
+
+	DropItem "InsRareAsFuckWeaponSpawn"		80	2
+}

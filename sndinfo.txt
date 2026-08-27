@@ -1,1 +1,5 @@
 mysticsword/fire SWORD1
+
+btsxrocketlauncher/fire XROKFIRE
+btsxrocketlauncher/explosion XROKEXP
+btsxrocketlauncher/charge XROKCHAR

@@ -1,0 +1,9 @@
+Model InsPulseCannonProjectile
+{ 
+    Path "Models/Tracers"
+    Skin 0 "tracer3.tga"
+    Model 0 "Tracer.md3"
+    Scale 1.2 2.0 2.0
+    PITCHFROMMOMENTUM
+    FrameIndex TRCR A 0 0
+}

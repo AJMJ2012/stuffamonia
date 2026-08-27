@@ -149,7 +149,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         WatchForWeapon_Roulette:
             EXTC MMOOMMOOMMOOMMOOMMOO 10 WatchForWeapon('ChompShow');
             TNT1 A 0 TurnOff();
-            Goto Spawn_Trader;
+            Goto Spawn_Roulette;
 
         ChompShow:
             EXTC N 0 ChompGun();
