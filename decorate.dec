@@ -28,3 +28,15 @@ Actor InsRocketLauncherSpawnerEx : PandRandomSpawner replaces InsRocketLauncherS
 
 	DropItem "InsRareAsFuckWeaponSpawn"		80	2
 }
+
+Actor InsBFG9000Spawner : PandRandomSpawner replaces BFG9000
+{
+	DropItem "Pand_BFG9000"				0   80
+	DropItem "Pand_BFG10000"			0  	30
+	DropItem "Pand_BFG2700"				15  20
+	DropItem "Pand_SoulReaver"			20  15
+	DropItem "Pand_Perforator"			25  20
+	DropItem "Pand_GaussAnnihilator"	40  20
+
+	DropItem "InsRareAsFuckWeaponSpawn2" 80	2
+}

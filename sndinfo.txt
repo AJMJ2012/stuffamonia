@@ -3,3 +3,12 @@ mysticsword/fire SWORD1
 btsxrocketlauncher/fire XROKFIRE
 btsxrocketlauncher/explosion XROKEXP
 btsxrocketlauncher/charge XROKCHAR
+
+weapons/reaverfire dssolfir
+weapons/reaverhit dssolhit
+weapons/reavercharge dssolchg
+weapons/reaverloop dssoloop
+weapons/reaverloop2 dssoloo2
+weapons/reaverpow dssolpow
+weapons/reaversoulout dssolout
+weapons/reaversoulfly dssolfly
