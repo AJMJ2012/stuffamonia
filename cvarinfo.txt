@@ -1,0 +1,5 @@
+server bool tri_sapphirewand_weave = true;
+server int tri_soulspear_height = 8;
+server int tri_soulspear_radius = 8;
+server int tri_soulspear_powered_height = 10;
+server int tri_soulspear_powered_radius = 12;
