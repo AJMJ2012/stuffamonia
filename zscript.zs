@@ -1,25 +1,21 @@
 version "4.10.0"
 
-
-//Class InsShotgunSpawnerEx : PandRandomSpawner replaces Shotgun
-//{
-//    Default
-//    {
-//        DropItem "Pand_Shotgun", 0, 100;
-//        DropItem "Pand_SlugShotgun", 0, 50;
-//        DropItem "Pand_AutoShotgun", 0, 20;
-//        DropItem "Pand_MysticSword", 0, 20;
-//        DropItem "Pand_RiotShotgun", 15, 15;
-//        DropItem "InsRareAsFuckWeaponSpawn", 80, 2;
-//    }
-//}
-
 // pandemonia patches
 #include "zscript/extractor/extractor.zs"
 #include "zscript/weapons/enlightener.zs"
 #include "zscript/weapons/sapphirewand.zs"
-//#include "zscript/weapons/mysticsword.zs"
-//#include "zscript/augment_menu.zs"
+#include "zscript/weapons/mysticsword.zs"
+
+Actor InsShotgunSpawnerEx : PandRandomSpawner replaces InsShotgunSpawner
+{
+	DropItem "Pand_Shotgun"				0   100
+	DropItem "Pand_SlugShotgun"			0  	50
+	DropItem "Pand_AutoShotgun"			0  	20
+	DropItem "Pand_MysticSword"			0   20
+	DropItem "Pand_RiotShotgun"			15  15
+
+	DropItem "InsRareAsFuckWeaponSpawn" 80	2
+}
 
 /*
 class ReplacerEvent : EventHandler
@@ -64,5 +60,4 @@ class ReplacerEvent : EventHandler
         }
     }
 }
-
 */

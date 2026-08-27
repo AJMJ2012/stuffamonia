@@ -2,11 +2,11 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
 {
     enum EXTRACTOR_VERSIONS
     {
-        AUGMENT_TRASHER,    // destroys augments and weapon (red)
         AUGMENT_EXTRACTOR,  // extracts augments, destroys weapon(orange)
         AUGMENT_REMOVER,    // removes augments, keeps weapon(white)
         AUGMENT_RECYCLER,   // extracts augments, returns weapon(blue)
-        AUGMENT_ROULETTE    // gamble weapon/augments for random weapon/augments(Rainbow)
+        AUGMENT_ROULETTE,   // gamble weapon/augments for random weapon/augments(Rainbow)
+        AUGMENT_TRASHER     // destroys augments and weapon (red)
     }
 
     Name gunname;
@@ -19,6 +19,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
     float gun_offsetrngx;
     float gun_offsetrngy;
     float gun_scalerng;
+	int gun_aug_arc;
 
     int vers;
     Array<string> weps;
@@ -41,25 +42,27 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
     States
     {
         Spawn:
-            TNT1 A 0 NoDelay
+            TNT1 A 1 NoDelay
             {
                 vers = Random(0,4);
                 switch(vers)
                 {
-                    case AUGMENT_TRASHER:
-                        SetStateLabel("Spawn_Trasher");
-                        break;
                     case AUGMENT_EXTRACTOR:
                         SetStateLabel("Spawn_Extractor");
                         break;
                     case AUGMENT_REMOVER:
-                        SetStateLabel("Spawn_Remover");
+						if (Random(0,1) == 0) // Needs to be more rare
+							SetStateLabel("Spawn_Remover");
                         break;
                     case AUGMENT_RECYCLER:
-                        SetStateLabel("Spawn_Recycler");
+						if (Random(0,2) == 0) // Needs to be more rare
+							SetStateLabel("Spawn_Recycler");
                         break;
                     case AUGMENT_ROULETTE:
-                        SetStateLabel("Spawn_Roulette");
+						//SetStateLabel("Spawn_Roulette"); // Needs Reworking
+                        break;
+                    case AUGMENT_TRASHER:
+                        //SetStateLabel("Spawn_Trasher"); // Sick of this joke
                         break;
                 }
             }
@@ -213,7 +216,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         augsup = gun.aug_sup;
         augfor = gun.aug_moreaugs;
         augmag = gun.aug_mag;
-
+		
         gunname = gun.GetClassName();
         gun_magCount = gun.magCount;
         gun_magSize = gun.magSize;
@@ -224,6 +227,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         gun_offsetrngx = gun.offsetrngx;
         gun_offsetrngy = gun.offsetrngy;
         gun_scalerng = gun.scalerng;
+		gun_aug_arc = gun.aug_arc; // Arcane Remnantns cannot be removed, but they are kept when a weapon is cleaned.
 
         gun.Destroy();
         A_StartSound("Armor/Salvage");
@@ -293,6 +297,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         gun.offsetrngx = gun_offsetrngx;
         gun.offsetrngy = gun_offsetrngy;
         gun.scalerng = gun_scalerng;
+        gun.aug_arc = gun_aug_arc; // Arcane Remnantns cannot be removed, but they are kept when a weapon is cleaned.
     }
 
     void FancyVisualShow_Start()
