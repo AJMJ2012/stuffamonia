@@ -22,6 +22,7 @@ Actor InsRocketLauncherSpawnerEx : PandRandomSpawner replaces InsRocketLauncherS
 	DropItem "Pand_NapalmBomber"			10  15
 	DropItem "Pand_StickyBombLauncher"		15  15
 	DropItem "Pand_PulseCannon"				15  15
+	DropItem "Pand_DrunkMissileLauncher"	15  15
 	DropItem "Pand_DualMissileLauncher"		20  15
 	DropItem "Pand_DirectHit"				25  15
 

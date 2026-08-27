@@ -36,3 +36,6 @@ effects/geigerburst2 GEIGERB2
 effects/geigerburst3 GEIGERB3
 effects/geigerburst4 GEIGERB4
 $random effects/geigerburst { effects/geigerburst1 effects/geigerburst2 effects/geigerburst3 effects/geigerburst4 }
+
+DrunkMissile/Fire	P_DRUNK
+$volume DrunkMissile/Fire 2.0
