@@ -14,3 +14,7 @@ version "4.10.0"
 #include "zscript/weapons/totenheim.zs" // Currently overpowered
 #include "zscript/weapons/totenheimlite.zs"
 #include "zscript/weapons/drunkmissile.zs"
+#include "zscript/weapons/bowlingball.zs"
+
+// dev map scripts
+#include "maps/stuff_dev.zs"

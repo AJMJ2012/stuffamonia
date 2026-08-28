@@ -16,33 +16,45 @@ Class Stuffamonia_Globals : Thinker
         "AugmentFormatter",
         "SuperiorAugment"
     };
+
     void GatherWeaponList()
     {
         // taken from mystery box code
-        for(int i = 0; i < AllActorClasses.Size(); i++)
-        {
+	    for(int i = 0;i<AllActorClasses.Size();i++)
+		{
             let wep = (class<PandInsWeapon>)(AllActorClasses[i]);
             if(wep is "PandInsWeapon" && !(wep is "Pand_Fist") && wep.GetClassName() != "PandInsWeapon")
             {
                 weapon_list.Push(AllActorClasses[i].GetClassName());
             }
-        }
+		}
     }
 
+    // chose a random weapon from the weapon list
     string ChooseRandomWeapon()
     {
         return weapon_list[random(0,weapon_list.Size()-1)];
     }
 
+    // chose a random augment from the augment list
     Name ChooseRandomAugment()
     {
         return AugmentList[random(0,AugmentList.Size()-1)];
     }
 
-    string RandomWeighted(array<string> items)
+    Actor TID_Find(int tid)
     {
-
-        return "";
+        if(tid > 0)
+        {
+            foreach(a : level.CreateActorIterator(tid))
+            {
+                if(a)
+                {
+                    return a;
+                }
+            }
+        }
+        return null;
     }
 
     // zscript boilerplate stuff
@@ -57,12 +69,14 @@ Class Stuffamonia_Globals : Thinker
         }
         return p;
     }
+
+
 }
 
 class Stuffamonia_Events : EventHandler
 {
     Stuffamonia_Globals globals;
-    override void NewGame()
+    override void OnRegister()
     {
         globals = Stuffamonia_Globals.Get();
         globals.GatherWeaponList();

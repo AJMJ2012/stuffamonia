@@ -1,1 +1,4 @@
 *.sh
+*.dbs
+*.backup*
+*.autosave*

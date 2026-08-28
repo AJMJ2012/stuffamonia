@@ -1,2 +1,6 @@
-include "zscript/globals/mapinfo.zs"
-
+GameInfo
+{
+	AddEventHandlers = "Stuffamonia_Events"
+	AddEventHandlers = "BowlingBallManager"
+    AddEventHandlers = "DevMapEvents"
+}
