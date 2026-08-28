@@ -1,5 +1,10 @@
 mysticsword/fire SWORD1
 
+weapons/bowlingball/pickup      BOWLPIN
+weapons/bowlingball/start       BOWLSTRT
+weapons/bowlingball/active      BOWLLOOP
+weapons/bowlingball/hit         BOWLPIN
+
 btsxrocketlauncher/fire XROKFIRE
 btsxrocketlauncher/explosion XROKEXP
 btsxrocketlauncher/charge XROKCHAR
@@ -39,3 +44,4 @@ $random effects/geigerburst { effects/geigerburst1 effects/geigerburst2 effects/
 
 DrunkMissile/Fire	P_DRUNK
 $volume DrunkMissile/Fire 2.0
+

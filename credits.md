@@ -11,7 +11,8 @@
     - Initial creator of our little Pandemonia addon
     - Additional Extractors
     - Mystic Sword
-
+    - Bowling Ball
+    
 ## Reference/Import Mod Credits:
 
 * Xaser:
@@ -21,6 +22,9 @@
     - Final Doomer
 
 ## Asset Credits:
+
+* Xatrix Entertainment
+    - Redneck Rampage's Bowling Ball
 
 * Amuscaria/Eriance
     - Eriguns2 Soul Reaver Sprites
