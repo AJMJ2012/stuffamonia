@@ -1,6 +1,2 @@
-/*
-GameInfo
-{
-	AddEventHandlers = "ReplacerEvent"
-}
-*/
+include "zscript/globals/mapinfo.zs"
+

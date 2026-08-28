@@ -3,3 +3,9 @@ server int tri_soulspear_height = 8;
 server int tri_soulspear_radius = 8;
 server int tri_soulspear_powered_height = 10;
 server int tri_soulspear_powered_radius = 12;
+
+server float tri_extractor_weight = 50;   // extracts augments, destroys weapon(orange)
+server float tri_remover_weight = 50;     // removes augments, keeps weapon(white)
+server float tri_recycler_weight = 50;    // extracts augments, returns weapon(blue)
+server float tri_roulette_weight = 50;    // gamble weapon/augments for random weapon/augments(Rainbow)
+server float tri_trasher_weight = 50;     // destroys augments and weapon (red)

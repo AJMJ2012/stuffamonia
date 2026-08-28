@@ -1,14 +1,5 @@
-Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
+Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
 {
-    enum EXTRACTOR_VERSIONS
-    {
-        AUGMENT_EXTRACTOR,  // extracts augments, destroys weapon(orange)
-        AUGMENT_REMOVER,    // removes augments, keeps weapon(white)
-        AUGMENT_RECYCLER,   // extracts augments, returns weapon(blue)
-        AUGMENT_ROULETTE,   // gamble weapon/augments for random weapon/augments(Rainbow)
-        AUGMENT_TRASHER     // destroys augments and weapon (red)
-    }
-
     Name gunname;
     int gun_magCount;
     int gun_magSize;
@@ -21,162 +12,32 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
     float gun_scalerng;
 	int gun_aug_arc;
 
-    int vers;
-    Array<string> weps;
     int used_count;
     int show_timer;
-    static const name AugmentList[] =
+
+    int proc_type;
+    meta string proc_msg;
+
+    Property Type: proc_type;
+    Property Msg: proc_msg;
+
+    Stuffamonia_Globals globals;
+    override void BeginPlay()
     {
-        "StrengthAugment",
-        "HasteAugment",
-        "PrecisionAugment",
-        "CapacityAugment",
-        "BlastAugment",
-        "ChaosAugment",
-        "FlameAugment",
-        "ScavengeAugment",
-        "AugmentFormatter",
-        "SuperiorAugment"
-    };
+        Super.BeginPlay();
+        globals = Stuffamonia_Globals.Get();
 
-    States
-    {
-        Spawn:
-            TNT1 A 1 NoDelay
-            {
-                vers = Random(0,4);
-                switch(vers)
-                {
-                    case AUGMENT_EXTRACTOR:
-                        SetStateLabel("Spawn_Extractor");
-                        break;
-                    case AUGMENT_REMOVER:
-						if (Random(0,1) == 0) // Needs to be more rare
-							SetStateLabel("Spawn_Remover");
-                        break;
-                    case AUGMENT_RECYCLER:
-						if (Random(0,2) == 0) // Needs to be more rare
-							SetStateLabel("Spawn_Recycler");
-                        break;
-                    case AUGMENT_ROULETTE:
-						//SetStateLabel("Spawn_Roulette"); // Needs Reworking
-                        break;
-                    case AUGMENT_TRASHER:
-                        //SetStateLabel("Spawn_Trasher"); // Sick of this joke
-                        break;
-                }
-            }
-            Loop;
+        // dont let the subclasses spawn anything, cause you know, inf loops and all that
+        if(self.GetClassName() != "TriAugmentProcessor") { return; }
 
-        /////////////////////////
-        // Augment Trasher
-        /////////////////////////
-        Spawn_Trasher:
-            EXTC J 10;
-            Loop;
-
-        WatchForWeapon_Trasher:
-            EXTC JJLLJJLLJJLLJJLLJJLL 10 WatchForWeapon('ChompGunAndAugs');
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Trasher;
-
-        ChompGunAndAugs:
-            EXTC K 60 ChompGun();
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Trasher;
-
-        /////////////////////////
-        // Augment Extractor
-        /////////////////////////
-        Spawn_Extractor:
-            EXTC A 10;
-            Loop;
-
-        WatchForWeapon_Extractor:
-            EXTC AACCAACCAACCAACCAACC 10 WatchForWeapon('ChompGun');
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Extractor;
-
-        ChompGun:
-            EXTC B 60 ChompGun();
-            EXTC C 20 SpitAugs();
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Extractor;
-
-        /////////////////////////
-        // Augment Remover
-        /////////////////////////
-        Spawn_Remover:
-            EXTC D 10;
-            Loop;
-
-        WatchForWeapon_Remover:
-            EXTC DDFFDDFFDDFFDDFFDDFF 10 WatchForWeapon('ChompAugs');
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Remover;
-
-        ChompAugs:
-            EXTC E 60 ChompGun();
-            EXTC F 20 SpitGun();
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Remover;
-
-        /////////////////////////
-        // Augment Recycler
-        /////////////////////////
-        Spawn_Recycler:
-            EXTC G 10;
-            Loop;
-
-        WatchForWeapon_Recycler:
-            EXTC GGIIGGIIGGIIGGIIGGII 10 WatchForWeapon('NoChomp');
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Recycler;
-
-        NoChomp:
-            EXTC H 60 ChompGun();
-            EXTC I 20 SpitBoth();
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Recycler;
-
-        /////////////////////////
-        // Augment Roulette
-        /////////////////////////
-        Spawn_Roulette:
-            EXTC M 10;
-            Loop;
-
-        WatchForWeapon_Roulette:
-            EXTC MMOOMMOOMMOOMMOOMMOO 10 WatchForWeapon('ChompShow');
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Roulette;
-
-        ChompShow:
-            EXTC N 0 ChompGun();
-            EXTC N 1 FancyVisualShow_Start();
-        DoShow:
-            EXTC ADGJM 1 FancyVisualShow();
-            Loop;
-
-        SetRandomAugs:
-            EXTC O 20 SpitRandom();
-            TNT1 A 0 TurnOff();
-            Goto Spawn_Roulette;
-    }
-
-    override void PostBeginPlay()
-    {
-        Super.PostBeginPlay();
-
-        // taken from mystery box code
-        for(int i = 0; i < AllActorClasses.Size(); i++)
-        {
-            let wep = (class<PandInsWeapon>)(AllActorClasses[i]);
-            if(wep is "PandInsWeapon" && !(wep is "Pand_Fist") && wep.GetClassName() != "PandInsWeapon")
-            {
-                weps.Push(AllActorClasses[i].GetClassName());
-            }
-        }
+        let rand = WRandomString.Create();
+        rand.Add("TriAugmentExtractor", tri_extractor_weight);
+        rand.Add("TriAugmentRemover", tri_remover_weight);
+        rand.Add("TriAugmentRecycler", tri_recycler_weight);
+        rand.Add("TriAugmentRoulette", tri_roulette_weight);
+        rand.Add("TriAugmentTrasher", tri_trasher_weight);
+        Spawn(rand.Pick(), pos);
+        Destroy();
     }
 
     void WatchForWeapon(StateLabel label)
@@ -227,10 +88,14 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         gun_offsetrngx = gun.offsetrngx;
         gun_offsetrngy = gun.offsetrngy;
         gun_scalerng = gun.scalerng;
-		gun_aug_arc = gun.aug_arc; // Arcane Remnantns cannot be removed, but they are kept when a weapon is cleaned.
+		gun_aug_arc = gun.aug_arc; // Arcane Remnants cannot be removed, but they are kept when a weapon is cleaned.
 
-        gun.Destroy();
         A_StartSound("Armor/Salvage");
+
+        // if the player throws in a gun with no aug, dont trash the weapon
+        // i've made this mistake before...
+        if(auglist.Size() == 0 && augsup == 0 && augfor == 0 && augmag == 0) { return; }
+        gun.Destroy();
     }
 
     void SpitAugs()
@@ -297,7 +162,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         gun.offsetrngx = gun_offsetrngx;
         gun.offsetrngy = gun_offsetrngy;
         gun.scalerng = gun_scalerng;
-        gun.aug_arc = gun_aug_arc; // Arcane Remnantns cannot be removed, but they are kept when a weapon is cleaned.
+        gun.aug_arc = gun_aug_arc;
     }
 
     void FancyVisualShow_Start()
@@ -348,7 +213,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
 
     void SpitRandom()
     {
-        let choice = weps[random(0,weps.Size()-1)];
+        let choice = globals.ChooseRandomWeapon();
         SpawnDingy(choice);
         int rare_extra = random(0,100);
         int augsize = auglist.size();
@@ -360,7 +225,7 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
         let aug_amount = random(0, augsize);
         for(int a = 0; a < aug_amount; a++)
         {
-            SpawnDingy(AugmentList[random(0,AugmentList.Size()-1)]);
+            SpawnDingy(globals.ChooseRandomAugment());
         }
         CheckUsedUp();
         A_StartSound("Extractor/Dispense");
@@ -400,48 +265,149 @@ Class InsAugmentExtractorEx : InsAugmentExtractor replaces InsAugmentExtractor
     {
         if(Distance3D(user) < 50 && !beingused)
         {
-            switch(vers)
-            {
-                case AUGMENT_TRASHER:
-                    PandHUDMessageHandler.PlainMsg(user.PlayerNumber(),"CONFONT","Drop a weapon with augments to destroy augments and weapon.",(240,130),(480,360),0,time:(0.2,5.0,0.2));
-                    break;
-                case AUGMENT_EXTRACTOR:
-                    PandHUDMessageHandler.PlainMsg(user.PlayerNumber(),"CONFONT","Drop a weapon with augments to extract augments.\nThis will destroy the weapon!",(240,130),(480,360),0,time:(0.2,5.0,0.2));
-                    break;
-                case AUGMENT_REMOVER:
-                    PandHUDMessageHandler.PlainMsg(user.PlayerNumber(),"CONFONT","Drop a weapon with augments to remove augments\nThis will destroy all the weapon's augments!",(240,130),(480,360),0,time:(0.2,5.0,0.2));
-                    break;
-                case AUGMENT_RECYCLER:
-                    PandHUDMessageHandler.PlainMsg(user.PlayerNumber(),"CONFONT","Drop a weapon with augments to extract augments and recycle weapon.\nAugments and weapon are not lost.",(240,130),(480,360),0,time:(0.2,5.0,0.2));
-                    break;
-                case AUGMENT_ROULETTE:
-                    PandHUDMessageHandler.PlainMsg(user.PlayerNumber(),"CONFONT","Drop a weapon to receive a random weapon with random augments.\nHas limited uses based on player count.",(240,130),(480,360),0,time:(0.2,5.0,0.2));
-                    break;
-            }
+            PandHUDMessageHandler.PlainMsg(user.PlayerNumber(),"CONFONT", proc_msg, (240,130), (480,360), 0, time:(0.2,5.0,0.2));
             A_StartSound("ArmorKit/Pickup",pitch:0.8);
             beingused = true;
             leuser = user;
             A_Face(user);
-            switch(vers)
-            {
-                case AUGMENT_TRASHER:
-                    SetStateLabel("WatchForWeapon_Trasher");
-                    break;
-                case AUGMENT_EXTRACTOR:
-                    SetStateLabel("WatchForWeapon_Extractor");
-                    break;
-                case AUGMENT_REMOVER:
-                    SetStateLabel("WatchForWeapon_Remover");
-                    break;
-                case AUGMENT_RECYCLER:
-                    SetStateLabel("WatchForWeapon_Recycler");
-                    break;
-                case AUGMENT_ROULETTE:
-                    SetStateLabel("WatchForWeapon_Roulette");
-                    break;
-            }
+            SetStateLabel("WatchForWeapon");
             return true;
         }
     	return false;
+    }
+}
+
+// extracts augments, destroys weapon (orange)
+class TriAugmentExtractor : TriAugmentProcessor
+{
+    Default
+    {
+        TriAugmentProcessor.Msg "Drop a weapon to extract augments.\nThis will destroy the weapon!";
+    }
+    States
+    {
+        Spawn:
+            EXTC A 10;
+            Loop;
+
+        WatchForWeapon:
+            EXTC AACCAACCAACCAACCAACC 10 WatchForWeapon('ChompGun');
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+
+        ChompGun:
+            EXTC B 60 ChompGun();
+            EXTC C 20 SpitAugs();
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+    }
+}
+
+// extracts augments, returns weapon(blue)
+class TriAugmentRecycler : TriAugmentProcessor
+{
+    Default
+    {
+        TriAugmentProcessor.Msg "Drop a weapon to extract augments and recycle weapon.\nAugments and weapon are not lost.";
+    }
+    States
+    {
+        Spawn:
+            EXTC G 10;
+            Loop;
+
+        WatchForWeapon:
+            EXTC GGIIGGIIGGIIGGIIGGII 10 WatchForWeapon('NoChomp');
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+
+        NoChomp:
+            EXTC H 60 ChompGun();
+            EXTC I 20 SpitBoth();
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+    }
+}
+
+// removes augments, keeps weapon(white)
+class TriAugmentRemover : TriAugmentProcessor
+{
+    Default
+    {
+        TriAugmentProcessor.Msg "Drop a weapon to remove augments\nThis will destroy all the weapon's augments!";
+    }
+    States
+    {
+        Spawn:
+            EXTC D 10;
+            Loop;
+
+        WatchForWeapon:
+            EXTC DDFFDDFFDDFFDDFFDDFF 10 WatchForWeapon('ChompAugs');
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+
+        ChompAugs:
+            EXTC E 60 ChompGun();
+            EXTC F 20 SpitGun();
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+    }
+}
+
+// gamble weapon/augments for random weapon/augments(Rainbow)
+class TriAugmentRoulette : TriAugmentProcessor
+{
+    Default
+    {
+        TriAugmentProcessor.Msg "Drop a weapon to receive a random weapon with random augments.\nHas limited uses based on player count.";
+    }
+    States
+    {
+        Spawn:
+            EXTC M 10;
+            Loop;
+
+        WatchForWeapon:
+            EXTC MMOOMMOOMMOOMMOOMMOO 10 WatchForWeapon('ChompShow');
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+
+        ChompShow:
+            EXTC N 0 ChompGun();
+            EXTC N 1 FancyVisualShow_Start();
+        DoShow:
+            EXTC ADGJM 1 FancyVisualShow();
+            Loop;
+
+        SetRandomAugs:
+            EXTC O 20 SpitRandom();
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+    }
+}
+
+// destroys augments and weapon (red) (darks clear favorite :D)
+class TriAugmentTrasher : TriAugmentProcessor
+{
+    Default
+    {
+        TriAugmentProcessor.Msg "Drop a weapon to \c[Red]destroy\c[white] the weapon and it's augments!";
+    }
+    States
+    {
+        Spawn:
+            EXTC J 10;
+            Loop;
+
+        WatchForWeapon:
+            EXTC JJLLJJLLJJLLJJLLJJLL 10 WatchForWeapon('ChompGunAndAugs');
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
+
+        ChompGunAndAugs:
+            EXTC K 60 ChompGun();
+            TNT1 A 0 TurnOff();
+            Goto Spawn;
     }
 }
