@@ -11,7 +11,6 @@
     - Initial creator of our little Pandemonia addon
     - Additional Extractors
     - Mystic Sword
-    - Duke Class
 
 ## Reference/Import Mod Credits:
 
@@ -22,9 +21,6 @@
     - Final Doomer
 
 ## Asset Credits:
-
-* 3DRealms
-    - Duke3D Player Sprites, Weapons, Sounds
 
 * Amuscaria/Eriance
     - Eriguns2 Soul Reaver Sprites

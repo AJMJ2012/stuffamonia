@@ -1,6 +1,2 @@
 include "zscript/globals/mapinfo.zs"
 
-GameInfo
-{
-	AddEventHandlers = "TheMightyFoot_Button"
-}
