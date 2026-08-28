@@ -1,5 +1,13 @@
 version "4.10.0"
 
+// stuffamonia globals
+#include "zscript/globals/globals.zs"
+#include "zscript/globals/randoms.zs"
+
+// Duke class stuff
+#include "zscript/classes/duke.zs"
+#include "zscript/weapons/duke_pistol.zs"
+
 // pandemonia patches
 #include "zscript/extractor/extractor.zs"
 #include "zscript/weapons/enlightener.zs"

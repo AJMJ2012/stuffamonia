@@ -1,6 +1,6 @@
-/*
+include "zscript/globals/mapinfo.zs"
+
 GameInfo
 {
-	AddEventHandlers = "ReplacerEvent"
+	AddEventHandlers = "TheMightyFoot_Button"
 }
-*/

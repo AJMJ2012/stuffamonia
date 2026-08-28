@@ -39,3 +39,8 @@ $random effects/geigerburst { effects/geigerburst1 effects/geigerburst2 effects/
 
 DrunkMissile/Fire	P_DRUNK
 $volume DrunkMissile/Fire 2.0
+
+// duke stuff
+Duke/Pistol/Fire     DUKEPIST
+Duke/Pistol/Insert   CLIPIN
+Duke/Pistol/Eject    CLIPOUT
