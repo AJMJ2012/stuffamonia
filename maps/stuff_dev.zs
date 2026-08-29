@@ -1,5 +1,8 @@
 
-
+// i know i should be doing this in acs, but the script editor in udb is a mess in linux
+// and slade doesnt want to compile anything, so screw it im doing it all here
+// but it also means i have more access to things like all the weapons classes and properties and stuff
+// so thats nice i guess
 class DevMapEvents : EventHandler
 {
     Stuffamonia_Globals globals;
@@ -23,16 +26,12 @@ class DevMapEvents : EventHandler
         }
     }
 
-    // i know i should be doing this in acs, but the script editor in udb is a mess in linux
-    // and slade doesnt want to compile anything, so screw it im doing it all here
-    // but it also means i have more access to things like all the weapons classes and properties and stuff
-    // so thats nice i guess
-    override void WorldLineActivated(WorldEvent e) 
+    override void WorldLineActivated(WorldEvent e)
     {
         if(level.MapName == "stuff_dev")
         {
             // this just seemed easier than using a tag iterator
-            // line needs some kind of special to active, so highjack thrust thing with no force, 
+            // line needs some kind of special to active, so highjack thrust thing with no force,
             // the more i go, the more cursed this gets lol
             if(e.ActivatedLine.special == 72)
             {
@@ -76,7 +75,7 @@ class DevMapEvents : EventHandler
                             }
                         }
                         break;
-                    
+
                     // augment giver buttons
                     case 10: e.Thing.GiveInventory("BlastAugment", 1);      e.thing.GiveInventory("AugmentCarryToken",1); break;
                     case 11: e.Thing.GiveInventory("ChaosAugment", 1);      e.thing.GiveInventory("AugmentCarryToken",1); break;
@@ -91,7 +90,7 @@ class DevMapEvents : EventHandler
                     case 20: e.Thing.GiveInventory("ArcaneRemnant", 1);     e.thing.GiveInventory("AugmentCarryToken",1); break;
                     case 21: e.Thing.GiveInventory("MagitechAugment", 1);   e.thing.GiveInventory("AugmentCarryToken",1); break;
 
-                    // clear weapon augment button
+                    // reset weapon button
                     case 22:
                         if(e.Thing.player && e.Thing.player.ReadyWeapon)
                         {
@@ -125,6 +124,7 @@ class DevMapEvents : EventHandler
                             wep.scalerng        = GetDefaultByType(wep_class).scalerng;
                             wep.capincrease     = GetDefaultByType(wep_class).capincrease;
                             wep.duraincrease    = GetDefaultByType(wep_class).duraincrease;
+                            wep.wepbar          = GetDefaultByType(wep_class).wepbar;
                             wep.wepbarmax       = GetDefaultByType(wep_class).wepbarmax;
                             wep.ammouse1        = GetDefaultByType(wep_class).ammouse1;
                             wep.ammouse2        = GetDefaultByType(wep_class).ammouse2;
@@ -132,19 +132,19 @@ class DevMapEvents : EventHandler
 
                     // clear augment inventory button
                     case 23:
-                        e.Thing.TakeInventory("BlastAugment", 999);     
-                        e.Thing.TakeInventory("ChaosAugment", 999);     
-                        e.Thing.TakeInventory("StrengthAugment", 999);  
-                        e.Thing.TakeInventory("HasteAugment", 999);     
-                        e.Thing.TakeInventory("AugmentFormatter", 999); 
-                        e.Thing.TakeInventory("SuperiorAugment", 999);  
-                        e.Thing.TakeInventory("FlameAugment", 999);     
-                        e.Thing.TakeInventory("ScavengeAugment", 999);  
-                        e.Thing.TakeInventory("CapacityAugment", 999);  
-                        e.Thing.TakeInventory("PrecisionAugment", 999); 
-                        e.Thing.TakeInventory("ArcaneRemnant", 999);    
+                        e.Thing.TakeInventory("BlastAugment", 999);
+                        e.Thing.TakeInventory("ChaosAugment", 999);
+                        e.Thing.TakeInventory("StrengthAugment", 999);
+                        e.Thing.TakeInventory("HasteAugment", 999);
+                        e.Thing.TakeInventory("AugmentFormatter", 999);
+                        e.Thing.TakeInventory("SuperiorAugment", 999);
+                        e.Thing.TakeInventory("FlameAugment", 999);
+                        e.Thing.TakeInventory("ScavengeAugment", 999);
+                        e.Thing.TakeInventory("CapacityAugment", 999);
+                        e.Thing.TakeInventory("PrecisionAugment", 999);
+                        e.Thing.TakeInventory("ArcaneRemnant", 999);
                         e.Thing.TakeInventory("MagitechAugment", 999);
-                        e.thing.TakeInventory("AugmentCarryToken",999); 
+                        e.thing.TakeInventory("AugmentCarryToken",999);
                         break;
                 }
             }
