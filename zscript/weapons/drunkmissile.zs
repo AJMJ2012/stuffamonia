@@ -204,15 +204,6 @@ Mixin Class InsDrunkMissileStuff
 		A_SetPitch(VectorAngle(vel.xy.Length(), vel.z));
 		double dAngle = ((pAngle % 360) - (angle % 360));
 		double dPitch = ((pPitch % 360) - (pitch % 360));
-
-		console.printf("pAngle: " .. pAngle);
-		console.printf("angle: " .. angle);
-		console.printf("dAngle: " .. dAngle);
-
-		console.printf("pPitch: " .. pPitch);
-		console.printf("pitch: " .. pitch);
-		console.printf("dPitch: " .. dPitch);
-
 		if (abs(dAngle) > 30 && abs(dAngle) < 330 || abs(dPitch) > 30 && abs(dPitch) < 330)
 		{ // Explode if the angle or pitch is greater than 30 degrees.
 			bBOUNCEONCEILINGS = false;
