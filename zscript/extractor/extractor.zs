@@ -5,12 +5,22 @@ Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
     int gun_magSize;
     int gun_dmax;
     bool gun_dwep;
-    bool gun_broken;
+    bool gun_dbroken;
     int gun_durability;
     float gun_offsetrngx;
     float gun_offsetrngy;
     float gun_scalerng;
 	int gun_aug_arc;
+    int gun_maxaugs;
+    string gun_conversionaug;
+    int gun_curaugs;
+    bool gun_gotsupped;
+    int gun_capincrease;
+    int gun_duraincrease;
+    int gun_wepbar;
+    int gun_wepbarmax;
+    int gun_ammouse1;
+    int gun_ammouse2;
 
     int used_count;
     int show_timer;
@@ -77,24 +87,44 @@ Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
         augsup = gun.aug_sup;
         augfor = gun.aug_moreaugs;
         augmag = gun.aug_mag;
-		
-        gunname = gun.GetClassName();
-        gun_magCount = gun.magCount;
-        gun_magSize = gun.magSize;
-        gun_dmax = gun.dmax;
-        gun_dwep = gun.dwep;
-        gun_broken = gun.dbroken;
-        gun_durability = gun.durability;
-        gun_offsetrngx = gun.offsetrngx;
-        gun_offsetrngy = gun.offsetrngy;
-        gun_scalerng = gun.scalerng;
-		gun_aug_arc = gun.aug_arc; // Arcane Remnants cannot be removed, but they are kept when a weapon is cleaned.
+
+        gunname             = gun.GetClassName();
+        gun_magCount        = gun.magCount;
+        gun_magSize         = gun.magSize;
+        gun_dmax            = gun.dmax;
+        gun_dwep            = gun.dwep;
+        gun_dbroken         = gun.dbroken;
+        gun_durability      = gun.durability;
+        gun_offsetrngx      = gun.offsetrngx;
+        gun_offsetrngy      = gun.offsetrngy;
+        gun_scalerng        = gun.scalerng;
+		gun_aug_arc         = gun.aug_arc; // Arcane Remnants cannot be removed, but they are kept when a weapon is cleaned.
+        gun_conversionaug   = gun.conversionaug;
+        gun_curaugs         = gun.curaugs;
+        gun_gotsupped       = gun.gotsupped;
+        gun_maxaugs         = gun.maxaugs;
+        gun_capincrease     = gun.capincrease;
+        gun_duraincrease    = gun.duraincrease;
+        gun_wepbar          = gun.wepbar;
+        gun_wepbarmax       = gun.wepbarmax;
+        gun_ammouse1        = gun.ammouse1;
+        gun_ammouse2        = gun.ammouse2;
 
         A_StartSound("Armor/Salvage");
 
         // if the player throws in a gun with no aug, dont trash the weapon
         // i've made this mistake before...
-        if(auglist.Size() == 0 && augsup == 0 && augfor == 0 && augmag == 0) { return; }
+        if(GetClassName() == "TriAugmentExtractor" || GetClassName() == "TriAugmentRecycler" || GetClassName() == "TriAugmentRemover")
+        {
+            if(auglist.Size() == 0 && augsup == 0 && augfor == 0 && augmag == 0)
+            {
+                Console.PrintF("Weapon has no augments.");
+                TurnOff();
+                SetStateLabel("Spawn");
+                return;
+            }
+        }
+
         gun.Destroy();
     }
 
@@ -133,7 +163,6 @@ Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
         augsup = 0;
         augfor = 0;
         augmag = 0;
-        auglist.Clear();
     }
 
     // insurrection's extractor spawn function, but returns the spawned object
@@ -155,14 +184,29 @@ Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
         }
         let gun = PandInsWeapon(SpawnDingy(gunname));
 
-        gun.dmax = gun_dmax;
-        gun.dwep = gun_dwep;
-        gun.dbroken = gun_broken;
-        gun.durability = gun_durability;
-        gun.offsetrngx = gun_offsetrngx;
-        gun.offsetrngy = gun_offsetrngy;
-        gun.scalerng = gun_scalerng;
-        gun.aug_arc = gun_aug_arc;
+        if(GetClassName() != "TriAugmentRemover")
+        {
+            gun.magCount        = gun_magCount;
+            gun.magSize         = gun_magSize;
+            gun.dmax            = gun_dmax;
+            gun.dwep            = gun_dwep;
+            gun.dbroken         = gun_dbroken;
+            gun.durability      = gun_durability;
+            gun.offsetrngx      = gun_offsetrngx;
+            gun.offsetrngy      = gun_offsetrngy;
+            gun.scalerng        = gun_scalerng;
+            gun.aug_arc         = gun_aug_arc; // Arcane Remnants cannot be removed, but they are kept when a weapon is cleaned.
+            gun.conversionaug   = gun_conversionaug;
+            gun.curaugs         = gun_curaugs;
+            gun.gotsupped       = gun_gotsupped;
+            gun.maxaugs         = gun_maxaugs;
+            gun.capincrease     = gun_capincrease;
+            gun.duraincrease    = gun_duraincrease;
+            gun.wepbar          = gun_wepbar;
+            gun.wepbarmax       = gun_wepbarmax;
+            gun.ammouse1        = gun_ammouse1;
+            gun.ammouse2        = gun_ammouse2;
+        }
     }
 
     void FancyVisualShow_Start()
@@ -257,6 +301,8 @@ Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
 
     void TurnOff()
     {
+        gun = null;
+        auglist.Clear();
         A_StartSound("ArmorKit/Off",pitch:0.8);
         beingused = false;
     }
