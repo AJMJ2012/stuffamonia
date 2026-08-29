@@ -23,6 +23,7 @@ class DevMapEvents : EventHandler
             Actor.Spawn("TriAugmentRecycler", globals.TID_Find(33).pos);
             Actor.Spawn("TriAugmentRoulette", globals.TID_Find(34).pos);
             Actor.Spawn("TriAugmentTrasher", globals.TID_Find(35).pos);
+            level.ChangeSky(TexMan.CheckForTexture("PANDSKY2"), TexMan.CheckForTexture("PANDSKY2"));
         }
     }
 
