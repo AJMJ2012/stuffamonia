@@ -6,12 +6,14 @@
 class DevMapEvents : EventHandler
 {
     Stuffamonia_Globals globals;
+    PandGlobalVariables globals_pand;
 
     array<PandInsWeapon> spawned_weapons;
 
     override void OnRegister()
     {
         globals = Stuffamonia_Globals.Get();
+        globals_pand = PandGlobalVariables.Get();
     }
 
     override void WorldLoaded(WorldEvent e)
@@ -147,6 +149,15 @@ class DevMapEvents : EventHandler
                         e.Thing.TakeInventory("MagitechAugment", 999);
                         e.thing.TakeInventory("AugmentCarryToken",999);
                         break;
+
+                    // game level buttons
+                    case 24: if(globals_pand) { globals_pand.GameLevel -= 100; } break;
+                    case 25: if(globals_pand) { globals_pand.GameLevel -= 10; } break;
+                    case 26: if(globals_pand) { globals_pand.GameLevel -= 1; } break;
+                    case 27: if(globals_pand) { globals_pand.GameLevel = 0; } break;
+                    case 28: if(globals_pand) { globals_pand.GameLevel += 1; } break;
+                    case 29: if(globals_pand) { globals_pand.GameLevel += 10; } break;
+                    case 30: if(globals_pand) { globals_pand.GameLevel += 100; } break;
                 }
             }
         }
