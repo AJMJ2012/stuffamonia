@@ -22,31 +22,111 @@ class DevMapEvents : EventHandler
         // the more i go, the more cursed this gets lol
         if(e.ActivatedLine.special == 72)
         {
-            // destroy any weapons that were previously spawned
-            foreach(weapon : spawned_weapons)
+            switch(e.ActivatedLine.args[0])
             {
-                // also dont destroy any of the weapons the player has picked up
-                if(weapon && !weapon.owner)
-                {
-                    weapon.Destroy();
-                }
-            }
-            spawned_weapons.Clear();
-
-            // go through the global weapon list and spawn the weapons in the requested slot
-            int tag_start = 2;
-            foreach(weapon : globals.weapon_list)
-            {
-                if(weapon)
-                {
-                    class<Weapon> wep_class = weapon;
-                    if(GetDefaultByType(wep_class).SlotNumber == e.ActivatedLine.args[0])
+                // weapon slot numbers
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    // destroy any weapons that were previously spawned
+                    foreach(weapon : spawned_weapons)
                     {
-                        let wep = PandInsWeapon(Actor.Spawn(weapon, globals.TID_Find(tag_start).pos));
-                        spawned_weapons.Push(wep);
-                        tag_start++;
+                        // also dont destroy any of the weapons the player has picked up
+                        if(weapon && !weapon.owner)
+                        {
+                            weapon.Destroy();
+                        }
                     }
-                }
+                    spawned_weapons.Clear();
+
+                    // go through the global weapon list and spawn the weapons in the requested slot
+                    int tag_start = 2;
+                    foreach(weapon : globals.weapon_list)
+                    {
+                        if(weapon)
+                        {
+                            class<Weapon> wep_class = weapon;
+                            if(GetDefaultByType(wep_class).SlotNumber == e.ActivatedLine.args[0])
+                            {
+                                let wep = PandInsWeapon(Actor.Spawn(weapon, globals.TID_Find(tag_start).pos));
+                                spawned_weapons.Push(wep);
+                                tag_start++;
+                            }
+                        }
+                    }
+                    break;
+                
+                // augment giver buttons
+                case 10: e.Thing.GiveInventory("BlastAugment", 1);      e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 11: e.Thing.GiveInventory("ChaosAugment", 1);      e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 12: e.Thing.GiveInventory("StrengthAugment", 1);   e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 13: e.Thing.GiveInventory("HasteAugment", 1);      e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 14: e.Thing.GiveInventory("AugmentFormatter", 1);  e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 15: e.Thing.GiveInventory("SuperiorAugment", 1);   e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 16: e.Thing.GiveInventory("FlameAugment", 1);      e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 17: e.Thing.GiveInventory("ScavengeAugment", 1);   e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 18: e.Thing.GiveInventory("CapacityAugment", 1);   e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 19: e.Thing.GiveInventory("PrecisionAugment", 1);  e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 20: e.Thing.GiveInventory("ArcaneRemnant", 1);     e.thing.GiveInventory("AugmentCarryToken",1); break;
+                case 21: e.Thing.GiveInventory("MagitechAugment", 1);   e.thing.GiveInventory("AugmentCarryToken",1); break;
+
+                // clear weapon augment button
+                case 22:
+                    if(e.Thing.player && e.Thing.player.ReadyWeapon)
+                    {
+                        let wep = PandInsWeapon(e.Thing.player.ReadyWeapon);
+                        wep.conversionaug = "null";
+                        wep.curaugs = 0;
+                        wep.aug_str = 0;
+                        wep.aug_prs = 0;
+                        wep.aug_hst = 0;
+                        wep.aug_cap = 0;
+                        wep.aug_bls = 0;
+                        wep.aug_chs = 0;
+                        wep.aug_flm = 0;
+                        wep.aug_scv = 0;
+                        wep.aug_sup = 0;
+                        wep.aug_moreaugs = 0;
+                        wep.aug_arc = 0;
+                        wep.aug_mag = 0;
+                        wep.gotsupped = false;
+
+                        class<PandInsWeapon> wep_class = wep.GetClassName();
+                        wep.maxaugs     = GetDefaultByType(wep_class).maxaugs;
+                        wep.magCount    = GetDefaultByType(wep_class).magCount;
+                        wep.magSize     = GetDefaultByType(wep_class).magSize;
+                        wep.dmax        = GetDefaultByType(wep_class).dmax;
+                        wep.dwep        = GetDefaultByType(wep_class).dwep;
+                        wep.dbroken     = GetDefaultByType(wep_class).dbroken;
+                        wep.durability  = GetDefaultByType(wep_class).durability;
+                        wep.offsetrngx  = GetDefaultByType(wep_class).offsetrngx;
+                        wep.offsetrngy  = GetDefaultByType(wep_class).offsetrngy;
+                        wep.scalerng    = GetDefaultByType(wep_class).scalerng;
+                    }
+
+                // clear augment inventory button
+                case 23:
+                    e.Thing.TakeInventory("BlastAugment", 999);     
+                    e.Thing.TakeInventory("ChaosAugment", 999);     
+                    e.Thing.TakeInventory("StrengthAugment", 999);  
+                    e.Thing.TakeInventory("HasteAugment", 999);     
+                    e.Thing.TakeInventory("AugmentFormatter", 999); 
+                    e.Thing.TakeInventory("SuperiorAugment", 999);  
+                    e.Thing.TakeInventory("FlameAugment", 999);     
+                    e.Thing.TakeInventory("ScavengeAugment", 999);  
+                    e.Thing.TakeInventory("CapacityAugment", 999);  
+                    e.Thing.TakeInventory("PrecisionAugment", 999); 
+                    e.Thing.TakeInventory("ArcaneRemnant", 999);    
+                    e.Thing.TakeInventory("MagitechAugment", 999);
+                    e.thing.TakeInventory("AugmentCarryToken",999); 
+                    break;
             }
         }
     }

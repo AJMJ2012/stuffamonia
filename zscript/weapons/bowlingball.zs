@@ -11,7 +11,7 @@
         Blast: Make the ball slightly explode on each hit and bounce
         Chaos: Make the ball spawn chaos projectiles per hit and bounce
         Flame: Makes the ball drop flames as it rolls
-        Scavange: Cannot be used
+        Scavenge: Cannot be used
         Superior: Causes the bowling ball to slightly home in on random targets
 
     // Magic:
