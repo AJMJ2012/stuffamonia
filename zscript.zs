@@ -1,11 +1,16 @@
 version "4.10.0"
 
+// mixins
+#include "zscript/mixins/darkass.zs"
+
 // stuffamonia globals
 #include "zscript/globals/globals.zs"
 #include "zscript/globals/randoms.zs"
 
-// pandemonia patches
+// extractors
 #include "zscript/extractor/extractor.zs"
+
+// weapons
 #include "zscript/weapons/enlightener.zs"
 #include "zscript/weapons/mysticsword.zs"
 #include "zscript/weapons/pulsecannon.zs"
@@ -15,6 +20,9 @@ version "4.10.0"
 #include "zscript/weapons/totenheimlite.zs"
 #include "zscript/weapons/drunkmissile.zs"
 #include "zscript/weapons/bowlingball.zs"
+
+// npcs
+#include "zscript/npcs/angrybones.zs"
 
 // dev map scripts
 #include "maps/stuff_dev.zs"
