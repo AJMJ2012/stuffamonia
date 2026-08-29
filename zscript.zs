@@ -11,10 +11,8 @@ version "4.10.0"
 #include "zscript/extractor/extractor.zs"
 
 // weapons
-#include "zscript/weapons/enlightener.zs"
 #include "zscript/weapons/mysticsword.zs"
 #include "zscript/weapons/pulsecannon.zs"
-#include "zscript/weapons/sapphirewand.zs"
 #include "zscript/weapons/soulreaver.zs"
 #include "zscript/weapons/totenheim.zs" // Currently overpowered
 #include "zscript/weapons/totenheimlite.zs"
@@ -26,3 +24,10 @@ version "4.10.0"
 
 // dev map scripts
 #include "maps/stuff_dev.zs"
+
+// pandemonia edits
+#include "zscript/edits/bfg10000.zs"
+#include "zscript/edits/enlightener.zs"
+#include "zscript/edits/herocketlauncher.zs"
+#include "zscript/edits/sapphirewand.zs"
+//#include "zscript/edits/soulspear.zs"

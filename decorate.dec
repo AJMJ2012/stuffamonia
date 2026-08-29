@@ -41,8 +41,3 @@ Actor InsBFG9000Spawner : PandRandomSpawner replaces BFG9000
 
 	DropItem "InsRareAsFuckWeaponSpawn2" 80	2
 }
-
-Actor Pand_HERocketLauncherRemover : RandomSpawner Replaces Pand_HERocketLauncher
-{
-	DropItem "InsRocketLauncherSpawner"
-}
