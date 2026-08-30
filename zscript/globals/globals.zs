@@ -2,7 +2,9 @@ Class Stuffamonia_Globals : Thinker
 {
     // every extractor had these when they spawned
     // lets save some resources by making these global
-    Array<string> weapon_list;
+    array<string> weapon_list;
+    array<string> armor_list;
+
     static const name AugmentList[] =
     {
         "StrengthAugment",
@@ -30,6 +32,18 @@ Class Stuffamonia_Globals : Thinker
 		}
     }
 
+    void GatherArmorList()
+    {
+        // taken from mystery box code
+	    for(int i = 0;i<AllActorClasses.Size();i++)
+		{
+            let arm = (class<PandBasicArmorPickup>)(AllActorClasses[i]);
+            if(arm is "PandBasicArmorPickup" && arm.GetClassName() != "PandBasicArmorPickup")
+            {
+                armor_list.Push(AllActorClasses[i].GetClassName());
+            }
+		}
+    }
     // chose a random weapon from the weapon list
     string ChooseRandomWeapon()
     {
@@ -80,5 +94,6 @@ class Stuffamonia_Events : EventHandler
     {
         globals = Stuffamonia_Globals.Get();
         globals.GatherWeaponList();
+        globals.GatherArmorList();
     }
 }

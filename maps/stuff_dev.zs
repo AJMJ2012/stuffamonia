@@ -9,6 +9,7 @@ class DevMapEvents : EventHandler
     PandGlobalVariables globals_pand;
 
     array<PandInsWeapon> spawned_weapons;
+    array<PandBasicArmorPickup> spawned_armors;
 
     override void OnRegister()
     {
@@ -158,6 +159,30 @@ class DevMapEvents : EventHandler
                     case 28: if(globals_pand) { globals_pand.GameLevel += 1; } break;
                     case 29: if(globals_pand) { globals_pand.GameLevel += 10; } break;
                     case 30: if(globals_pand) { globals_pand.GameLevel += 100; } break;
+
+                    // reset armors button
+                    case 31:
+                        // destroy any armors that were previously spawned
+                        foreach(armor : spawned_armors)
+                        {
+                            if(armor)
+                            {
+                                armor.Destroy();
+                            }
+                        }
+                        spawned_armors.Clear();
+
+                        // go through the global armor list and spawn all the armors
+                        int tag_start2 = 39;
+                        foreach(armor : globals.armor_list)
+                        {
+                            if(armor)
+                            {
+                                spawned_armors.Push(PandBasicArmorPickup(Actor.Spawn(armor, globals.TID_Find(tag_start2).pos)));
+                                tag_start2++;
+                            }
+                        }
+                        break;
                 }
             }
         }

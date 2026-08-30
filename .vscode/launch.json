@@ -8,7 +8,7 @@
             "type": "uzdoom",
             "name": "UZDoom: Launch",
             "request": "launch",
-            "gamePath": "${workspaceFolder}/.vscode/uzdoom.AppImage",
+            "gamePath": "/home/tribeam/.local/bin/uzdoom.AppImage",
             "cwd": "${workspaceFolder}",
             "port": 19021,
             "projects": [
