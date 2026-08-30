@@ -2,3 +2,5 @@
 *.dbs
 *.backup*
 *.autosave*
+.vscode
+*.zdl
