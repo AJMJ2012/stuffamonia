@@ -34,8 +34,7 @@ Class Stuffamonia_Globals : Thinker
 
     void GatherArmorList()
     {
-        // taken from mystery box code
-	    for(int i = 0;i<AllActorClasses.Size();i++)
+	    for(int i = 0;i < AllActorClasses.Size(); i++)
 		{
             let arm = (class<PandBasicArmorPickup>)(AllActorClasses[i]);
             if(arm is "PandBasicArmorPickup" && arm.GetClassName() != "PandBasicArmorPickup")

@@ -5,6 +5,7 @@
 class DevMapEvents : EventHandler
 {
     const TAG_START = 1;
+    const TAG_EXTRACTORS = 237;
 
     // Thrust Thing line action, just used so switches actually click and change texture
     // i cant find a way to make switches work any other way in zscript :|
@@ -18,6 +19,12 @@ class DevMapEvents : EventHandler
     const BUTTON_CLEAR_WEAPONS = 6;
     const BUTTON_CLEAR_SPAWNED_ITEMS = 7;
     const BUTTON_SPAWN_EVERYTHING = 8;
+    const BUTTON_SPAWN_HEALTH = 9;
+    const BUTTON_SPAWN_AMMO = 10;
+    const BUTTON_SPAWN_INVENTORY = 11;
+    const BUTTON_SPAWN_ARMOR = 12;
+    const BUTTON_SPAWN_POWERUPS = 13;
+    const BUTTON_SPAWN_RUNES = 14;
 
     Stuffamonia_Globals globals;
     PandGlobalVariables globals_pand;
@@ -40,6 +47,8 @@ class DevMapEvents : EventHandler
         "WeaponSupplyKit",
         "ShoulderCannon",
         "ProvisionalVessel",
+        "GammaVisionGoggles",
+        "InsAmuletOfPower",
         "InsMysteryBox"
     };
 
@@ -52,21 +61,19 @@ class DevMapEvents : EventHandler
         "LifeSphere",
         "NewMegasphere",
         "SuperSphere",
-        "NewBerserk",
         "NewBlurSphere",
         "Doomsphere",
         "DoubleDamageSphere",
-        "PandLightGoggles",
-        "GammaVisionGoggles",
         "NewInvulSphere",
-        "PandAllMap",
-        "PandMapScanner",
-        "NewRadSuit",
         "ReincarnationSphere",
         "Salvationsphere",
         "ShieldSphere",
         "TerrorSphere",
-        "InsAmuletOfPower"
+        "NewBerserk",
+        "PandAllMap",
+        "PandMapScanner",
+        "NewRadSuit",
+        "PandLightGoggles"
     };
 
     void ChangeClass(Actor who)
@@ -98,12 +105,23 @@ class DevMapEvents : EventHandler
     void ClearSpawnedItems()
     {
         // destroy anything that was previously spawned
-        foreach(weapon : spawned)
+        foreach(item : spawned)
         {
             // also dont destroy anything the player has picked up
-            if(weapon && !Inventory(weapon).owner)
+            if(item)
             {
-                weapon.Destroy();
+                let i = Inventory(item);
+                if(i)
+                {
+                    if(!i.owner)
+                    {
+                        i.Destroy();
+                    }
+                }
+                else
+                {
+                    item.Destroy();
+                }
             }
         }
         spawned.Clear();
@@ -126,18 +144,6 @@ class DevMapEvents : EventHandler
 		{
             let ammo = (class<Ammo>)(AllActorClasses[i]);
             if(ammo is "Ammo")
-            {
-                who.TakeInventory(AllActorClasses[i].GetClassName(), 0xFFFFFF);
-            }
-		}
-    }
-
-    void ClearPlayerInventory(Actor who)
-    {
-	    for(int i = 0;i < AllActorClasses.Size(); i++)
-		{
-            let item = (class<Inventory>)(AllActorClasses[i]);
-            if(item is "Inventory")
             {
                 who.TakeInventory(AllActorClasses[i].GetClassName(), 0xFFFFFF);
             }
@@ -167,99 +173,25 @@ class DevMapEvents : EventHandler
         ClearSpawnedItems();
 
         // weapons
-        foreach(weapon : globals.weapon_list)
+        for(int w = 0; w < 10; w++)
         {
-            if(weapon)
-            {
-                spawned.Push(Actor.Spawn(weapon, globals.TID_Find(tag).pos));
-                tag++;
-            }
+            tag = SpawnWeapons(w, tag, false);
         }
-
-        // armor
-        foreach(armor : globals.armor_list)
-        {
-            if(armor)
-            {
-                spawned.Push(Actor.Spawn(armor, globals.TID_Find(tag).pos));
-                tag++;
-            }
-        }
-
-        // ammo
-	    for(int i = 0; i < AllActorClasses.Size(); i++)
-		{
-            let ammo = (class<Pand_Ammo>)(AllActorClasses[i]);
-            if(ammo is "Pand_Ammo" && ammo.GetClassName() != "Pand_Ammo")
-            {
-                spawned.Push(Actor.Spawn(ammo, globals.TID_Find(tag).pos));
-                tag++;
-            }
-		}
-        spawned.Push(Actor.Spawn("Backpack", globals.TID_Find(tag).pos));
-        tag++;
-
-        // health
-	    for(int i = 0; i < AllActorClasses.Size(); i++)
-		{
-            let hpbonus = (class<NewHealthBonus>)(AllActorClasses[i]);
-            if(hpbonus is "NewHealthBonus")
-            {
-                spawned.Push(Actor.Spawn(hpbonus, globals.TID_Find(tag).pos));
-                tag++;
-            }
-		}
-
-        foreach(hpitem : specific_health_items)
-        {
-            spawned.Push(Actor.Spawn(hpitem, globals.TID_Find(tag).pos));
-            tag++;
-        }
-
-        // runes
-        for(int i = 0; i < AllActorClasses.Size(); i++)
-		{
-            let rune = (class<BaseRune>)(AllActorClasses[i]);
-            if(rune is "BaseRune" && rune.GetClassName() != "BaseRune")
-            {
-                spawned.Push(Actor.Spawn(rune, globals.TID_Find(tag).pos));
-                tag++;
-            }
-		}
-
-        // inventory
-        foreach(inv : specific_inv_items)
-        {
-            spawned.Push(Actor.Spawn(inv, globals.TID_Find(tag).pos));
-            tag++;
-        }
-
-        // powerups
-        foreach(pup : specific_pups_items)
-        {
-            spawned.Push(Actor.Spawn(pup, globals.TID_Find(tag).pos));
-            tag++;
-        }
-
-        // augments
-        for(int i = 0; i < AllActorClasses.Size(); i++)
-		{
-            let aug = (class<BaseAugment>)(AllActorClasses[i]);
-            if(aug is "BaseAugment" && aug.GetClassName() != "BaseAugment")
-            {
-                spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
-                tag++;
-            }
-		}
-
-
+        tag = SpawnAmmo(tag, false);
+        tag = SpawnArmors(tag, false);
+        tag = SpawnHealthItems(tag, false);
+        tag = SpawnInventory(tag, false);
+        tag = SpawnPowerups(tag, false);
+        tag = SpawnRunes(tag, false);
+        tag = SpawnAugments(tag, false);
+        tag = SpawnExtractors(tag, false);
     }
 
     // go through the global weapon list and spawn the weapons in the requested slot
-    void SpawnWeapons(int slot)
+    int SpawnWeapons(int slot, int tag = TAG_START, bool clear = true)
     {
-        int tag = TAG_START;
-        ClearSpawnedItems();
+        if(clear) { ClearSpawnedItems(); }
+
         foreach(weapon : globals.weapon_list)
         {
             if(weapon)
@@ -273,13 +205,35 @@ class DevMapEvents : EventHandler
                 }
             }
         }
+        return tag;
+    }
+
+    int SpawnAmmo(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+	    for(int i = 0; i < AllActorClasses.Size(); i++)
+		{
+            let ammo = (class<Pand_Ammo>)(AllActorClasses[i]);
+            if(ammo is "Pand_Ammo" && ammo.GetClassName() != "Pand_Ammo")
+            {
+                spawned.Push(Actor.Spawn(ammo, globals.TID_Find(tag).pos));
+                tag++;
+            }
+		}
+
+        // backpack is its own thing
+        spawned.Push(Actor.Spawn("Backpack", globals.TID_Find(tag).pos));
+        tag++;
+
+        return tag;
     }
 
     // go through the global armor list and spawn all the armors
-    void SpawnArmors()
+    int SpawnArmors(int tag = TAG_START, bool clear = true)
     {
-        int tag = TAG_START;
-        ClearSpawnedItems();
+        if(clear) { ClearSpawnedItems(); }
+
         foreach(armor : globals.armor_list)
         {
             if(armor)
@@ -288,6 +242,108 @@ class DevMapEvents : EventHandler
                 tag++;
             }
         }
+        return tag;
+    }
+
+    int SpawnHealthItems(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+	    for(int i = 0; i < AllActorClasses.Size(); i++)
+		{
+            let hpbonus = (class<NewHealthBonus>)(AllActorClasses[i]);
+            if(hpbonus is "NewHealthBonus")
+            {
+                spawned.Push(Actor.Spawn(hpbonus, globals.TID_Find(tag).pos));
+                tag++;
+            }
+		}
+
+        // specific health item types
+        foreach(hpitem : specific_health_items)
+        {
+            spawned.Push(Actor.Spawn(hpitem, globals.TID_Find(tag).pos));
+            tag++;
+        }
+
+        return tag;
+    }
+
+    int SpawnInventory(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+        foreach(inv : specific_inv_items)
+        {
+            spawned.Push(Actor.Spawn(inv, globals.TID_Find(tag).pos));
+            tag++;
+        }
+
+        return tag;
+    }
+
+    int SpawnPowerups(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+        foreach(pup : specific_pups_items)
+        {
+            spawned.Push(Actor.Spawn(pup, globals.TID_Find(tag).pos));
+            tag++;
+        }
+
+        return tag;
+    }
+
+    int SpawnRunes(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+        for(int i = 0; i < AllActorClasses.Size(); i++)
+		{
+            let rune = (class<BaseRune>)(AllActorClasses[i]);
+            if(rune is "BaseRune" && rune.GetClassName() != "BaseRune")
+            {
+                spawned.Push(Actor.Spawn(rune, globals.TID_Find(tag).pos));
+                tag++;
+            }
+		}
+
+        return tag;
+    }
+
+    int SpawnAugments(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+        for(int i = 0; i < AllActorClasses.Size(); i++)
+		{
+            let aug = (class<BaseAugment>)(AllActorClasses[i]);
+            if(aug is "BaseAugment" && aug.GetClassName() != "BaseAugment")
+            {
+                spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
+                tag++;
+            }
+		}
+
+        return tag;
+    }
+
+    int SpawnExtractors(int tag = TAG_START, bool clear = true)
+    {
+        if(clear) { ClearSpawnedItems(); }
+
+        for(int i = 0; i < AllActorClasses.Size(); i++)
+		{
+            let aug = (class<TriAugmentProcessor>)(AllActorClasses[i]);
+            if(aug is "TriAugmentProcessor" && aug.GetClassName() != "TriAugmentProcessor")
+            {
+                spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
+                tag++;
+            }
+		}
+
+        return tag;
     }
 
     void GiveAugment(int type, Actor who)
@@ -362,11 +418,7 @@ class DevMapEvents : EventHandler
     {
         if(level.MapName == "stuff_dev")
         {
-            Actor.Spawn("TriAugmentExtractor", globals.TID_Find(31).pos);
-            Actor.Spawn("TriAugmentRemover", globals.TID_Find(32).pos);
-            Actor.Spawn("TriAugmentRecycler", globals.TID_Find(33).pos);
-            Actor.Spawn("TriAugmentRoulette", globals.TID_Find(34).pos);
-            Actor.Spawn("TriAugmentTrasher", globals.TID_Find(35).pos);
+            SpawnExtractors(TAG_EXTRACTORS);
             level.ChangeSky(TexMan.CheckForTexture("PANDSKY2"), TexMan.CheckForTexture("PANDSKY2"));
         }
     }
@@ -394,6 +446,12 @@ class DevMapEvents : EventHandler
                     case BUTTON_CLEAR_SPAWNED_ITEMS:    ClearSpawnedItems();            break;
                     case BUTTON_CLASS:                  ChangeClass(who);               break;
                     case BUTTON_SPAWN_EVERYTHING:       SpawnEverything();              break;
+                    case BUTTON_SPAWN_HEALTH:           SpawnHealthItems();             break;
+                    case BUTTON_SPAWN_AMMO:             SpawnAmmo();                    break;
+                    case BUTTON_SPAWN_INVENTORY:        SpawnInventory();               break;
+                    case BUTTON_SPAWN_ARMOR:            SpawnArmors();                  break;
+                    case BUTTON_SPAWN_POWERUPS:         SpawnPowerups();                break;
+                    case BUTTON_SPAWN_RUNES:            SpawnRunes();                   break;
                 }
             }
         }
