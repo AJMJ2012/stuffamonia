@@ -42,6 +42,16 @@ Class Stuffamonia_Globals : Thinker
             {
                 armor_list.Push(AllActorClasses[i].GetClassName());
             }
+            let armb = (class<NewArmorBonus>)(AllActorClasses[i]);
+            if(armb is "NewArmorBonus")
+            {
+                armor_list.Push(AllActorClasses[i].GetClassName());
+            }
+            let armb2 = (class<ArmorBoost>)(AllActorClasses[i]);
+            if(armb2 is "ArmorBoost")
+            {
+                armor_list.Push(AllActorClasses[i].GetClassName());
+            }
 		}
     }
     // chose a random weapon from the weapon list
