@@ -37,6 +37,7 @@ class DevMapEvents : EventHandler
         "NewStimpack"
     };
 
+    // all items that go into your inventory
     static const name specific_inv_items[] =
     {
         "PandArmorCase",
@@ -52,6 +53,7 @@ class DevMapEvents : EventHandler
         "InsMysteryBox"
     };
 
+    // items that you collect and auto activate
     static const name specific_pups_items[] =
     {
         "AbyssalGuardsphere",
@@ -184,7 +186,7 @@ class DevMapEvents : EventHandler
         tag = SpawnPowerups(tag, false);
         tag = SpawnRunes(tag, false);
         tag = SpawnAugments(tag, false);
-        tag = SpawnExtractors(tag, false);
+        tag = SpawnExtractors(tag, false, true);
     }
 
     // go through the global weapon list and spawn the weapons in the requested slot
@@ -329,7 +331,7 @@ class DevMapEvents : EventHandler
         return tag;
     }
 
-    int SpawnExtractors(int tag = TAG_START, bool clear = true)
+    int SpawnExtractors(int tag = TAG_START, bool clear = true, bool list = false)
     {
         if(clear) { ClearSpawnedItems(); }
 
@@ -338,7 +340,14 @@ class DevMapEvents : EventHandler
             let aug = (class<TriAugmentProcessor>)(AllActorClasses[i]);
             if(aug is "TriAugmentProcessor" && aug.GetClassName() != "TriAugmentProcessor")
             {
-                spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
+                if(list)
+                {
+                    spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
+                }
+                else
+                {
+                    Actor.Spawn(aug, globals.TID_Find(tag).pos);
+                }
                 tag++;
             }
 		}
@@ -360,8 +369,8 @@ class DevMapEvents : EventHandler
             case 7:     who.GiveInventory("ScavengeAugment", 1);    break;
             case 8:     who.GiveInventory("CapacityAugment", 1);    break;
             case 9:     who.GiveInventory("PrecisionAugment", 1);   break;
-            case 10:    who.GiveInventory("ArcaneRemnant", 1);     break;
-            case 11:    who.GiveInventory("MagitechAugment", 1);   break;
+            case 10:    who.GiveInventory("ArcaneRemnant", 1);      break;
+            case 11:    who.GiveInventory("MagitechAugment", 1);    break;
         }
         who.GiveInventory("AugmentCarryToken",1);
     }
