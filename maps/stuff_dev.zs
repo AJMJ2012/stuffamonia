@@ -201,7 +201,7 @@ class DevMapEvents : EventHandler
                 class<Weapon> wep_class = weapon;
                 if(GetDefaultByType(wep_class).SlotNumber == slot)
                 {
-                    let wep = Actor.Spawn(weapon, globals.TID_Find(tag).pos);
+                    let wep = Actor.Spawn(weapon, globals.TID_Find(tag).pos, ALLOW_REPLACE);
                     spawned.Push(wep);
                     tag++;
                 }
@@ -219,13 +219,13 @@ class DevMapEvents : EventHandler
             let ammo = (class<Pand_Ammo>)(AllActorClasses[i]);
             if(ammo is "Pand_Ammo" && ammo.GetClassName() != "Pand_Ammo")
             {
-                spawned.Push(Actor.Spawn(ammo, globals.TID_Find(tag).pos));
+                spawned.Push(Actor.Spawn(ammo, globals.TID_Find(tag).pos), ALLOW_REPLACE);
                 tag++;
             }
 		}
 
         // backpack is its own thing
-        spawned.Push(Actor.Spawn("Backpack", globals.TID_Find(tag).pos));
+        spawned.Push(Actor.Spawn("Backpack", globals.TID_Find(tag).pos), ALLOW_REPLACE);
         tag++;
 
         return tag;
@@ -240,7 +240,7 @@ class DevMapEvents : EventHandler
         {
             if(armor)
             {
-                spawned.Push(Actor.Spawn(armor, globals.TID_Find(tag).pos));
+                spawned.Push(Actor.Spawn(armor, globals.TID_Find(tag).pos), ALLOW_REPLACE);
                 tag++;
             }
         }
@@ -256,7 +256,7 @@ class DevMapEvents : EventHandler
             let hpbonus = (class<NewHealthBonus>)(AllActorClasses[i]);
             if(hpbonus is "NewHealthBonus")
             {
-                spawned.Push(Actor.Spawn(hpbonus, globals.TID_Find(tag).pos));
+                spawned.Push(Actor.Spawn(hpbonus, globals.TID_Find(tag).pos), ALLOW_REPLACE);
                 tag++;
             }
 		}
@@ -264,7 +264,7 @@ class DevMapEvents : EventHandler
         // specific health item types
         foreach(hpitem : specific_health_items)
         {
-            spawned.Push(Actor.Spawn(hpitem, globals.TID_Find(tag).pos));
+            spawned.Push(Actor.Spawn(hpitem, globals.TID_Find(tag).pos), ALLOW_REPLACE);
             tag++;
         }
 
@@ -277,7 +277,7 @@ class DevMapEvents : EventHandler
 
         foreach(inv : specific_inv_items)
         {
-            spawned.Push(Actor.Spawn(inv, globals.TID_Find(tag).pos));
+            spawned.Push(Actor.Spawn(inv, globals.TID_Find(tag).pos), ALLOW_REPLACE);
             tag++;
         }
 
@@ -290,7 +290,7 @@ class DevMapEvents : EventHandler
 
         foreach(pup : specific_pups_items)
         {
-            spawned.Push(Actor.Spawn(pup, globals.TID_Find(tag).pos));
+            spawned.Push(Actor.Spawn(pup, globals.TID_Find(tag).pos), ALLOW_REPLACE);
             tag++;
         }
 
@@ -306,7 +306,7 @@ class DevMapEvents : EventHandler
             let rune = (class<BaseRune>)(AllActorClasses[i]);
             if(rune is "BaseRune" && rune.GetClassName() != "BaseRune")
             {
-                spawned.Push(Actor.Spawn(rune, globals.TID_Find(tag).pos));
+                spawned.Push(Actor.Spawn(rune, globals.TID_Find(tag).pos), ALLOW_REPLACE);
                 tag++;
             }
 		}
@@ -323,7 +323,7 @@ class DevMapEvents : EventHandler
             let aug = (class<BaseAugment>)(AllActorClasses[i]);
             if(aug is "BaseAugment" && aug.GetClassName() != "BaseAugment")
             {
-                spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
+                spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos, ALLOW_REPLACE));
                 tag++;
             }
 		}
@@ -342,11 +342,11 @@ class DevMapEvents : EventHandler
             {
                 if(list)
                 {
-                    spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos));
+                    spawned.Push(Actor.Spawn(aug, globals.TID_Find(tag).pos, ALLOW_REPLACE));
                 }
                 else
                 {
-                    Actor.Spawn(aug, globals.TID_Find(tag).pos);
+                    Actor.Spawn(aug, globals.TID_Find(tag).pos, ALLOW_REPLACE);
                 }
                 tag++;
             }
