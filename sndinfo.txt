@@ -41,12 +41,21 @@ DrunkMissile/Fire	P_DRUNK
 $volume DrunkMissile/Fire 2.0
 
 // bowling ball
-weapons/bowlingball/pickup      BOWLPIN
-weapons/bowlingball/start       BOWLSTRT
-weapons/bowlingball/active      BOWLLOOP
-weapons/bowlingball/hit         BOWLPIN
+weapons/bowlingball/pickup BOWLPIN
+weapons/bowlingball/start BOWLSTRT
+weapons/bowlingball/active BOWLLOOP
+weapons/bowlingball/hit BOWLPIN
 
 // Angry Bones
 AngryBones/See DSABSEE
 AngryBones/Chase DSABCHAS
 AngryBones/Die DSABDIE
+
+// PhoenixRod
+PhoenixRod/Shoot PHOSHT
+PhoenixRod/Hit PHOHIT
+PhoenixRod/Explode PHOEX
+PhoenixRod/ShootPowered HRNPOW
+PhoenixRod/HitPowered HRNHIT
+PhoenixRod/ExplodePowered PHOPEX
+PhoenixRod/Fly PHOPOW

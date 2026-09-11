@@ -4,3 +4,5 @@
 *.autosave*
 .vscode
 *.zdl
+/pand
+/stuff

@@ -18,6 +18,7 @@ version "4.10.0"
 #include "zscript/weapons/totenheimlite.zs"
 #include "zscript/weapons/drunkmissile.zs"
 #include "zscript/weapons/bowlingball.zs"
+#include "zscript/weapons/phoenixrod.zs"
 
 // npcs
 #include "zscript/npcs/angrybones.zs"
