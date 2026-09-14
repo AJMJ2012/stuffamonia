@@ -83,8 +83,6 @@ class DevMapEvents : EventHandler
     {
         who.TakeInventory("InsAlreadyGotClass", 0xFFFFFF);
         ClearPlayerAugments(who);
-        ClearPlayerWeapons(who);
-        ClearPlayerAmmo(who);
         EventHandler.SendNetworkEvent("Pand_OpenClassMenu");
     }
 
@@ -209,9 +207,9 @@ class DevMapEvents : EventHandler
 
     int SpawnAllWeapons(int tag = TAG_START, bool clear = true)
     {
-        for(int w = 0; w < 10; w++)
+        for(int w; w < 10; w++)
         {
-            tag = SpawnWeapons(w, tag, clear);
+            tag = SpawnWeapons(w);
         }
         return tag;
     }
@@ -220,7 +218,7 @@ class DevMapEvents : EventHandler
     {
         if(clear) { ClearSpawnedItems(); }
 
-	    for(int i = 0; i < AllActorClasses.Size(); i++)
+	    for(int i; i < AllActorClasses.Size(); i++)
 		{
             let ammo = (class<Pand_Ammo>)(AllActorClasses[i]);
             if(ammo is "Pand_Ammo" && ammo.GetClassName() != "Pand_Ammo")

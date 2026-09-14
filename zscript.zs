@@ -5,7 +5,7 @@ version "4.10.0"
 
 // stuffamonia globals
 #include "zscript/globals/globals.zs"
-#include "zscript/globals/randoms.zs"
+#include "zscript/globals/random.zs"
 
 // extractors
 #include "zscript/extractor/extractor.zs"

@@ -40,7 +40,7 @@ Class TriAugmentProcessor : InsAugmentExtractor replaces InsAugmentExtractor
         // dont let the subclasses spawn anything, cause you know, inf loops and all that
         if(self.GetClassName() != "TriAugmentProcessor") { return; }
 
-        let rand = WRandomString.Create();
+        let rand = WRandom_String.Create();
         rand.Add("TriAugmentExtractor", tri_extractor_weight);
         rand.Add("TriAugmentRemover", tri_remover_weight);
         rand.Add("TriAugmentRecycler", tri_recycler_weight);
