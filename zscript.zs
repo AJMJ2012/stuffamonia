@@ -19,6 +19,7 @@ version "4.10.0"
 #include "zscript/weapons/drunkmissile.zs"
 #include "zscript/weapons/bowlingball.zs"
 #include "zscript/weapons/phoenixrod.zs"
+#include "zscript/weapons/expander.zs"
 
 // npcs
 #include "zscript/npcs/angrybones.zs"

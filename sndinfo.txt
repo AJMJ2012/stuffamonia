@@ -1,5 +1,8 @@
 mysticsword/fire SWORD1
 
+expander/fire       exshot3b
+expander/expand     enlarge
+
 btsxrocketlauncher/fire XROKFIRE
 btsxrocketlauncher/explosion XROKEXP
 btsxrocketlauncher/charge XROKCHAR
