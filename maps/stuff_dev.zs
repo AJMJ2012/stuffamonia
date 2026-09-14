@@ -209,7 +209,7 @@ class DevMapEvents : EventHandler
     {
         for(int w; w < 10; w++)
         {
-            tag = SpawnWeapons(w);
+            tag = SpawnWeapons(w, tag, clear);
         }
         return tag;
     }
@@ -450,22 +450,22 @@ class DevMapEvents : EventHandler
                 Actor who = e.Thing;
                 switch(special)
                 {
-                    case BUTTON_WEAPONS:                SpawnWeapons(arg);              break;
-                    case BUTTON_AUGMENTS:               GiveAugment(arg, who);          break;
-                    case BUTTON_WEAPONRESET:            ResetWeapon(who);               break;
-                    case BUTTON_CLEAR_AUGMENTS:         ClearPlayerAugments(who);       break;
-                    case BUTTON_GAMELEVEL:              ChangeGameLevel(arg);           break;
-                    case BUTTON_CLEAR_WEAPONS:          ClearPlayerWeapons(who);        break;
-                    case BUTTON_CLEAR_SPAWNED_ITEMS:    ClearSpawnedItems();            break;
-                    case BUTTON_CLASS:                  ChangeClass(who);               break;
-                    case BUTTON_SPAWN_EVERYTHING:       SpawnEverything();              break;
-                    case BUTTON_SPAWN_HEALTH:           SpawnHealthItems();             break;
-                    case BUTTON_SPAWN_AMMO:             SpawnAmmo();                    break;
-                    case BUTTON_SPAWN_INVENTORY:        SpawnInventory();               break;
-                    case BUTTON_SPAWN_ARMOR:            SpawnArmors();                  break;
-                    case BUTTON_SPAWN_POWERUPS:         SpawnPowerups();                break;
-                    case BUTTON_SPAWN_RUNES:            SpawnRunes();                   break;
-                    case BUTTON_SPAWN_WEAPONS:          SpawnAllWeapons();              break;
+                    case BUTTON_WEAPONS:                SpawnWeapons(arg);                  break;
+                    case BUTTON_AUGMENTS:               GiveAugment(arg, who);              break;
+                    case BUTTON_WEAPONRESET:            ResetWeapon(who);                   break;
+                    case BUTTON_CLEAR_AUGMENTS:         ClearPlayerAugments(who);           break;
+                    case BUTTON_GAMELEVEL:              ChangeGameLevel(arg);               break;
+                    case BUTTON_CLEAR_WEAPONS:          ClearPlayerWeapons(who);            break;
+                    case BUTTON_CLEAR_SPAWNED_ITEMS:    ClearSpawnedItems();                break;
+                    case BUTTON_CLASS:                  ChangeClass(who);                   break;
+                    case BUTTON_SPAWN_EVERYTHING:       SpawnEverything();                  break;
+                    case BUTTON_SPAWN_HEALTH:           SpawnHealthItems();                 break;
+                    case BUTTON_SPAWN_AMMO:             SpawnAmmo();                        break;
+                    case BUTTON_SPAWN_INVENTORY:        SpawnInventory();                   break;
+                    case BUTTON_SPAWN_ARMOR:            SpawnArmors();                      break;
+                    case BUTTON_SPAWN_POWERUPS:         SpawnPowerups();                    break;
+                    case BUTTON_SPAWN_RUNES:            SpawnRunes();                       break;
+                    case BUTTON_SPAWN_WEAPONS:          SpawnAllWeapons(TAG_START, false);  break;
                 }
             }
         }
